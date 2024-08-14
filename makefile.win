@@ -1,0 +1,37 @@
+# Project: Img2Base64
+# Makefile created by Red Panda C++ 3.1.2871
+
+CXX      = "g++.exe"
+CC       = "gcc.exe"
+WINDRES  = "windres.exe"
+RM       = del /q /f
+CD       = cd /d
+LIBS     = "-Wl,--stack,12582912" "-s" "-mwindows" "-static"
+INCS     = 
+CXXINCS  = 
+CXXFLAGS = $(CXXINCS) "-Os" "-pipe"
+CFLAGS   = $(INCS) "-Os" "-pipe"
+WINDRESFLAGS = 
+RES      = Img2Base64_private.res
+OBJ      = main.o $(RES)
+BIN      = Img2Base64.exe
+LINKOBJ  = "main.o" "Img2Base64_private.res"
+CLEANOBJ = "main.o" "Img2Base64_private.res" "Img2Base64.exe"
+
+.PHONY: all all-before all-after clean clean-custom
+
+all: all-before $(BIN) all-after
+
+clean: clean-custom
+	-$(RM) $(CLEANOBJ) >NUL 2>&1
+
+Img2Base64.exe: $(OBJ)
+
+	$(CXX) $(LINKOBJ) -o "Img2Base64.exe" $(LIBS)
+
+main.o: main.cpp
+	$(CXX) -c "main.cpp" -o "main.o" $(CXXFLAGS)  -finput-charset=UTF-8 -fexec-charset=gbk
+
+Img2Base64_private.res: Img2Base64_private.rc 
+	$(WINDRES) -i "Img2Base64_private.rc" --input-format=rc -o "Img2Base64_private.res" -O coff $(WINDRESFLAGS) 
+
